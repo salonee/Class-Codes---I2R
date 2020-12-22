@@ -17,7 +17,7 @@ class(mtcars)
 #=======================================================================================================
 #2. Class conversion
 #=======================================================================================================
-setwd("C:/Users/sallu/Desktop/PRAXIS/TERM 1/IML/DataSets/")
+setwd("F:/PRAXIS/TERM 2/I2R/")
 cars <- read.csv("cars.csv")
 
 str(cars)
@@ -132,11 +132,8 @@ cor(log(cars$MPG[cars$MPG!=0 & cars$Horsepower!=0]), log(cars$Horsepower[cars$MP
 # IF Horsepower < 100 THEN "Low HP"
 # IF Horsepower >= 100 THEN "High HP"
 
-
-LOW_HP = cars[(cars$Horsepower < 100),1]
-HIGH_HP = cars[(cars$Horsepower >= 100),1]
-HP <- readline(prompt = "Enter HP: ")
-if (HP < 100) print("Low HP") else print("High HP")
+View(cars)
+cars$HP = ifelse(cars$Horsepower < 100, "Low HP", "High HP")
 
 
 #PROBLEM 2:
@@ -147,8 +144,11 @@ if (HP < 100) print("Low HP") else print("High HP")
 # IF MPG >= 35 THEN "AWESOME"
 
 
-
-
+cars$MPG_Rate = NA
+cars$MPG_Rate = ifelse(cars$MPG < 15, "Normal",
+                      ifelse(cars$MPG <=25,"Good",
+                      ifelse(cars$MPG <=35,"Great","Awesome")))
+View(cars)
 
 
 
@@ -156,6 +156,8 @@ if (HP < 100) print("Low HP") else print("High HP")
 #6. SQL in R
 #=======================================================================================================
 
+
+install.packages('sqldf')
 
 require(sqldf)
 
@@ -167,6 +169,8 @@ sqldf('select mpg, wt from mtcars order by mpg')
 sqldf('select am, avg(mpg) as avg_mpg from mtcars group by am')
 sqldf('select am, avg(mpg) as avg_mpg from mtcars group by am')
 sqldf('select am, avg(mpg), stdev(mpg) from mtcars group by am')
+
+
 
 
 
